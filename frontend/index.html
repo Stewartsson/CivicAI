@@ -1,0 +1,1848 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>CivicAI - Smart Civic Issue Reporting</title>
+
+    <!-- =====================================================
+         LEAFLET MAP CSS
+         ===================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
+
+    <!-- =====================================================
+         LEAFLET MARKER CLUSTER CSS
+         ===================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css"
+    />
+
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css"
+    />
+
+    <!-- =====================================================
+         BASIC PAGE STYLE
+         ===================================================== -->
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+
+            margin: 0;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #e9fff8,
+                    #ffffff
+                );
+
+            color: #123b42;
+        }
+
+
+        /* =====================================================
+           HEADER
+           ===================================================== */
+
+        header {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #007f73,
+                    #00a896
+                );
+
+            color: white;
+
+            padding: 25px;
+
+            text-align: center;
+
+            box-shadow:
+                0 4px 15px
+                rgba(0,0,0,0.15);
+        }
+
+
+        header h1 {
+
+            margin: 0;
+
+            font-size: 34px;
+        }
+
+
+        header p {
+
+            margin:
+                8px
+                0
+                0;
+
+            font-size: 16px;
+        }
+
+
+        /* =====================================================
+           MAIN CONTAINER
+           ===================================================== */
+
+        .container {
+
+            width: 92%;
+
+            max-width: 1500px;
+
+            margin:
+                30px
+                auto;
+        }
+
+
+        /* =====================================================
+           DASHBOARD
+           ===================================================== */
+
+        .dashboard {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(
+                        180px,
+                        1fr
+                    )
+                );
+
+            gap: 18px;
+
+            margin-bottom: 30px;
+        }
+
+
+        .dashboard-card {
+
+            background: white;
+
+            border-radius: 15px;
+
+            padding: 22px;
+
+            text-align: center;
+
+            box-shadow:
+                0 5px 18px
+                rgba(0,0,0,0.10);
+
+            border:
+                1px solid
+                #d8efea;
+        }
+
+
+        .dashboard-card h3 {
+
+            margin:
+                0
+                0
+                10px;
+
+            font-size: 15px;
+
+            color: #52757b;
+        }
+
+
+        .dashboard-card .number {
+
+            font-size: 32px;
+
+            font-weight: bold;
+
+            color: #007f73;
+        }
+
+
+        /* =====================================================
+           FORM
+           ===================================================== */
+
+        .form-section {
+
+            background: white;
+
+            padding: 25px;
+
+            border-radius: 15px;
+
+            box-shadow:
+                0 5px 18px
+                rgba(0,0,0,0.10);
+
+            margin-bottom: 30px;
+        }
+
+
+        .form-section h2 {
+
+            margin-top: 0;
+
+            color: #00695c;
+        }
+
+
+        .form-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(
+                        250px,
+                        1fr
+                    )
+                );
+
+            gap: 15px;
+        }
+
+
+        .form-group {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 7px;
+        }
+
+
+        .form-group.full {
+
+            grid-column:
+                1 /
+                -1;
+        }
+
+
+        .form-group label {
+
+            font-weight: bold;
+
+            color: #355c61;
+        }
+
+
+        input,
+        textarea,
+        select {
+
+            width: 100%;
+
+            padding: 12px;
+
+            border:
+                1px solid
+                #c7dfdb;
+
+            border-radius: 8px;
+
+            font-size: 15px;
+
+            outline: none;
+        }
+
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+
+            border-color:
+                #00a896;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(
+                    0,
+                    168,
+                    150,
+                    0.12
+                );
+        }
+
+
+        textarea {
+
+            min-height: 120px;
+
+            resize: vertical;
+        }
+
+
+        .submit-btn {
+
+            margin-top: 18px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #007f73,
+                    #00a896
+                );
+
+            color: white;
+
+            border: none;
+
+            border-radius: 9px;
+
+            padding:
+                13px
+                25px;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+
+        .submit-btn:hover {
+
+            opacity: 0.9;
+        }
+
+
+        #submitMessage {
+
+            margin-top: 18px;
+
+            font-weight: bold;
+        }
+
+
+        /* =====================================================
+           ANALYTICS
+           ===================================================== */
+
+        .analytics-section {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(
+                        280px,
+                        1fr
+                    )
+                );
+
+            gap: 20px;
+
+            margin-bottom: 30px;
+        }
+
+
+        .analytics-card {
+
+            background: white;
+
+            padding: 22px;
+
+            border-radius: 15px;
+
+            box-shadow:
+                0 5px 18px
+                rgba(0,0,0,0.10);
+        }
+
+
+        .analytics-card h2 {
+
+            margin-top: 0;
+
+            color: #00695c;
+        }
+
+
+        .analytics-row {
+
+            margin-bottom: 15px;
+        }
+
+
+        .analytics-label {
+
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            margin-bottom: 6px;
+
+            font-weight: bold;
+        }
+
+
+        .progress-background {
+
+            width: 100%;
+
+            height: 10px;
+
+            background:
+                #e7f2ef;
+
+            border-radius: 10px;
+
+            overflow: hidden;
+        }
+
+
+        .progress-bar {
+
+            height: 100%;
+
+            border-radius: 10px;
+        }
+
+
+        .category-bar {
+
+            background: #00a896;
+        }
+
+
+        .low-bar {
+
+            background: #4dcc8b;
+        }
+
+
+        .medium-bar {
+
+            background: #edbd3e;
+        }
+
+
+        .high-bar {
+
+            background: #e0525a;
+        }
+
+
+        .normal-bar {
+
+            background: #4c8bf5;
+        }
+
+
+        .important-bar {
+
+            background: #ed9b3e;
+        }
+
+
+        .urgent-bar {
+
+            background: #e0525a;
+        }
+
+
+        .pending-bar {
+
+            background: #edbd3e;
+        }
+
+
+        .progress-status-bar {
+
+            background: #4c8bf5;
+        }
+
+
+        .resolved-bar {
+
+            background: #4dcc8b;
+        }
+
+
+        /* =====================================================
+           MAP
+           ===================================================== */
+
+        .map-section {
+
+            background: white;
+
+            padding: 25px;
+
+            border-radius: 15px;
+
+            box-shadow:
+                0 5px 18px
+                rgba(0,0,0,0.10);
+
+            margin-bottom: 30px;
+        }
+
+
+        .map-header {
+
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            align-items: center;
+
+            gap: 15px;
+
+            flex-wrap: wrap;
+
+            margin-bottom: 15px;
+        }
+
+
+        .map-header h2 {
+
+            margin: 0;
+
+            color: #00695c;
+        }
+
+
+        .map-description {
+
+            color: #52757b;
+
+            margin:
+                10px
+                0
+                15px;
+        }
+
+
+        #mapStatus {
+
+            font-weight: bold;
+
+            color: #00695c;
+        }
+
+
+        #fitMapBtn {
+
+            border:
+                1px solid
+                #00a896;
+
+            background: white;
+
+            color: #00695c;
+
+            padding:
+                10px
+                18px;
+
+            border-radius: 8px;
+
+            cursor: pointer;
+
+            font-weight: bold;
+        }
+
+
+        #fitMapBtn:hover {
+
+            background:
+                #e8fffa;
+        }
+
+
+        #complaintMap {
+
+            width: 100%;
+
+            height: 600px;
+
+            border-radius: 15px;
+
+            overflow: hidden;
+
+            border:
+                1px solid
+                #b9dcd6;
+        }
+
+
+        .map-legend {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 18px;
+
+            flex-wrap: wrap;
+
+            margin-top: 15px;
+
+            font-size: 16px;
+        }
+
+
+        .legend-title {
+
+            font-weight: bold;
+        }
+
+
+        .legend-item {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 7px;
+        }
+
+
+        .legend-dot {
+
+            width: 15px;
+
+            height: 15px;
+
+            border-radius: 50%;
+
+            display: inline-block;
+        }
+
+
+        .legend-low {
+
+            background:
+                #4dcc8b;
+        }
+
+
+        .legend-medium {
+
+            background:
+                #edbd3e;
+        }
+
+
+        .legend-high {
+
+            background:
+                #e0525a;
+        }
+
+
+        /* =====================================================
+           FILTER SECTION
+           ===================================================== */
+
+        .complaints-section {
+
+            background: white;
+
+            padding: 25px;
+
+            border-radius: 15px;
+
+            box-shadow:
+                0 5px 18px
+                rgba(0,0,0,0.10);
+        }
+
+
+        .complaints-header {
+
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            align-items: center;
+
+            flex-wrap: wrap;
+
+            gap: 15px;
+        }
+
+
+        .complaints-header h2 {
+
+            margin: 0;
+
+            color: #00695c;
+        }
+
+
+        .filters {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(
+                        170px,
+                        1fr
+                    )
+                );
+
+            gap: 12px;
+
+            margin:
+                20px
+                0;
+        }
+
+
+        #clearFilters {
+
+            background:
+                #fff;
+
+            border:
+                1px solid
+                #d35b5b;
+
+            color:
+                #c62828;
+
+            padding: 11px;
+
+            border-radius: 8px;
+
+            cursor: pointer;
+
+            font-weight: bold;
+        }
+
+
+        /* =====================================================
+           COMPLAINT CARDS
+           ===================================================== */
+
+        #complaintsContainer {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(
+                        320px,
+                        1fr
+                    )
+                );
+
+            gap: 20px;
+        }
+
+
+        .complaint-card {
+
+            background:
+                #fbfffe;
+
+            border:
+                1px solid
+                #d6ebe7;
+
+            border-radius: 13px;
+
+            padding: 20px;
+
+            box-shadow:
+                0 3px 10px
+                rgba(
+                    0,
+                    0,
+                    0,
+                    0.06
+                );
+        }
+
+
+        .complaint-title {
+
+            margin-top: 0;
+
+            color: #00695c;
+        }
+
+
+        .description {
+
+            color: #45676b;
+
+            line-height: 1.5;
+        }
+
+
+        .info-row {
+
+            margin:
+                10px
+                0;
+
+            line-height: 1.4;
+        }
+
+
+        .info-label {
+
+            font-weight: bold;
+
+            color: #355c61;
+        }
+
+
+        .badge {
+
+            display: inline-block;
+
+            padding:
+                4px
+                10px;
+
+            border-radius: 20px;
+
+            font-size: 13px;
+
+            font-weight: bold;
+        }
+
+
+        .severity-low {
+
+            background:
+                #dff8eb;
+
+            color:
+                #177245;
+        }
+
+
+        .severity-medium {
+
+            background:
+                #fff3cd;
+
+            color:
+                #8a6700;
+        }
+
+
+        .severity-high {
+
+            background:
+                #ffe0e0;
+
+            color:
+                #b4232d;
+        }
+
+
+        .priority-normal {
+
+            background:
+                #e3edff;
+
+            color:
+                #315fa8;
+        }
+
+
+        .priority-important {
+
+            background:
+                #fff0dc;
+
+            color:
+                #9a5b00;
+        }
+
+
+        .priority-urgent {
+
+            background:
+                #ffe0e0;
+
+            color:
+                #b4232d;
+        }
+
+
+        .status-box {
+
+            margin-top: 18px;
+
+            padding: 12px;
+
+            background:
+                #f0faf7;
+
+            border-radius: 9px;
+        }
+
+
+        .status-box label {
+
+            display: block;
+
+            font-weight: bold;
+
+            margin-bottom: 7px;
+        }
+
+
+        .card-buttons {
+
+            margin-top: 15px;
+        }
+
+
+        .view-btn {
+
+            width: 100%;
+
+            background:
+                #007f73;
+
+            color: white;
+
+            border: none;
+
+            padding: 11px;
+
+            border-radius: 8px;
+
+            cursor: pointer;
+
+            font-weight: bold;
+        }
+
+
+        .view-btn:hover {
+
+            background:
+                #00695c;
+        }
+
+
+        .no-complaints {
+
+            text-align: center;
+
+            padding: 40px;
+
+            color: #607d80;
+
+            grid-column:
+                1 /
+                -1;
+        }
+
+
+        /* =====================================================
+           MODAL
+           ===================================================== */
+
+        #detailsModal {
+
+            display: none;
+
+            position: fixed;
+
+            z-index: 9999;
+
+            left: 0;
+
+            top: 0;
+
+            width: 100%;
+
+            height: 100%;
+
+            background:
+                rgba(
+                    0,
+                    0,
+                    0,
+                    0.55
+                );
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 20px;
+        }
+
+
+        .modal-box {
+
+            background: white;
+
+            width: 100%;
+
+            max-width: 750px;
+
+            max-height: 90vh;
+
+            overflow-y: auto;
+
+            border-radius: 15px;
+
+            padding: 25px;
+
+            position: relative;
+        }
+
+
+        #closeModal {
+
+            position: absolute;
+
+            top: 12px;
+
+            right: 15px;
+
+            font-size: 28px;
+
+            border: none;
+
+            background: none;
+
+            cursor: pointer;
+
+            color: #555;
+        }
+
+
+        .modal-title {
+
+            color: #00695c;
+
+            padding-right: 40px;
+        }
+
+
+        .modal-description {
+
+            background:
+                #f4fbf9;
+
+            padding: 15px;
+
+            border-radius: 10px;
+
+            margin:
+                15px
+                0;
+        }
+
+
+        .modal-info-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(
+                        220px,
+                        1fr
+                    )
+                );
+
+            gap: 12px;
+        }
+
+
+        .modal-info {
+
+            padding: 15px;
+
+            background:
+                #f7fbfa;
+
+            border-radius: 10px;
+        }
+
+
+        .modal-info-label {
+
+            display: block;
+
+            font-weight: bold;
+
+            color: #52757b;
+
+            margin-bottom: 7px;
+        }
+
+
+        .modal-info-value {
+
+            font-weight: bold;
+        }
+
+
+        #modalCloseButton {
+
+            margin-top: 20px;
+
+            width: 100%;
+
+            padding: 12px;
+
+            border: none;
+
+            background:
+                #007f73;
+
+            color: white;
+
+            border-radius: 8px;
+
+            cursor: pointer;
+
+            font-weight: bold;
+        }
+
+
+        /* =====================================================
+           MOBILE
+           ===================================================== */
+
+        @media (
+            max-width: 700px
+        ) {
+
+            header h1 {
+
+                font-size: 26px;
+            }
+
+
+            .container {
+
+                width: 95%;
+            }
+
+
+            #complaintMap {
+
+                height: 450px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         HEADER
+         ===================================================== -->
+
+    <header>
+
+        <h1>
+            🏙️ CivicAI
+        </h1>
+
+        <p>
+            Smart Civic Issue Reporting System
+        </p>
+
+    </header>
+
+
+    <main class="container">
+
+
+        <!-- =================================================
+             DASHBOARD
+             ================================================= -->
+
+        <section class="dashboard">
+
+
+            <div class="dashboard-card">
+
+                <h3>
+                    Total Complaints
+                </h3>
+
+                <div
+                    class="number"
+                    id="totalCount"
+                >
+                    0
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-card">
+
+                <h3>
+                    🔴 High Severity
+                </h3>
+
+                <div
+                    class="number"
+                    id="highCount"
+                >
+                    0
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-card">
+
+                <h3>
+                    🚨 Urgent
+                </h3>
+
+                <div
+                    class="number"
+                    id="urgentCount"
+                >
+                    0
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-card">
+
+                <h3>
+                    🟡 Pending
+                </h3>
+
+                <div
+                    class="number"
+                    id="pendingCount"
+                >
+                    0
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-card">
+
+                <h3>
+                    🔵 In Progress
+                </h3>
+
+                <div
+                    class="number"
+                    id="progressCount"
+                >
+                    0
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-card">
+
+                <h3>
+                    🟢 Resolved
+                </h3>
+
+                <div
+                    class="number"
+                    id="resolvedCount"
+                >
+                    0
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- =================================================
+             COMPLAINT FORM
+             ================================================= -->
+
+        <section class="form-section">
+
+            <h2>
+                📝 Report a Civic Issue
+            </h2>
+
+
+            <form id="complaintForm">
+
+
+                <div class="form-grid">
+
+
+                    <div class="form-group">
+
+                        <label for="title">
+                            Complaint Title
+                        </label>
+
+                        <input
+                            type="text"
+                            id="title"
+                            placeholder="Example: Large pothole on road"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="location">
+                            Location
+                        </label>
+
+                        <input
+                            type="text"
+                            id="location"
+                            placeholder="Example: Anna Nagar, Chennai"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="category">
+                            Category
+                        </label>
+
+                        <select id="category">
+
+                            <option value="Other">
+                                Let AI decide
+                            </option>
+
+                            <option value="Garbage">
+                                Garbage
+                            </option>
+
+                            <option value="Pothole">
+                                Pothole
+                            </option>
+
+                            <option value="Drainage">
+                                Drainage
+                            </option>
+
+                            <option value="Streetlight">
+                                Streetlight
+                            </option>
+
+                            <option value="Water">
+                                Water
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div
+                        class="form-group full"
+                    >
+
+                        <label for="description">
+                            Description
+                        </label>
+
+                        <textarea
+                            id="description"
+                            placeholder="Describe the civic problem in detail..."
+                            required
+                        ></textarea>
+
+                    </div>
+
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="submit-btn"
+                >
+                    🚀 Submit Complaint
+                </button>
+
+
+            </form>
+
+
+            <div id="submitMessage"></div>
+
+
+        </section>
+
+
+        <!-- =================================================
+             ANALYTICS
+             ================================================= -->
+
+        <section class="analytics-section">
+
+
+            <div class="analytics-card">
+
+                <h2>
+                    📊 Categories
+                </h2>
+
+                <div
+                    id="categoryAnalytics"
+                ></div>
+
+            </div>
+
+
+            <div class="analytics-card">
+
+                <h2>
+                    ⚠️ Severity
+                </h2>
+
+                <div
+                    id="severityAnalytics"
+                ></div>
+
+            </div>
+
+
+            <div class="analytics-card">
+
+                <h2>
+                    🚨 Priority
+                </h2>
+
+                <div
+                    id="priorityAnalytics"
+                ></div>
+
+            </div>
+
+
+            <div class="analytics-card">
+
+                <h2>
+                    📌 Status
+                </h2>
+
+                <div
+                    id="statusAnalytics"
+                ></div>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- =================================================
+             MAP
+             ================================================= -->
+
+        <section class="map-section">
+
+
+            <div class="map-header">
+
+                <h2>
+                    🗺️ Complaint Locations
+                </h2>
+
+
+                <button
+                    id="fitMapBtn"
+                    type="button"
+                >
+                    🎯 Show All Complaints
+                </button>
+
+            </div>
+
+
+            <p class="map-description">
+
+                View reported complaints on an
+                interactive OpenStreetMap map.
+                Drag, zoom and explore the map freely.
+
+            </p>
+
+
+            <div id="mapStatus">
+                🗺️ Map loading...
+            </div>
+
+
+            <br>
+
+
+            <div id="complaintMap"></div>
+
+
+            <div class="map-legend">
+
+
+                <span class="legend-title">
+                    Severity
+                </span>
+
+
+                <span class="legend-item">
+
+                    <span
+                        class="legend-dot legend-low"
+                    ></span>
+
+                    Low
+
+                </span>
+
+
+                <span class="legend-item">
+
+                    <span
+                        class="legend-dot legend-medium"
+                    ></span>
+
+                    Medium
+
+                </span>
+
+
+                <span class="legend-item">
+
+                    <span
+                        class="legend-dot legend-high"
+                    ></span>
+
+                    High
+
+                </span>
+
+
+            </div>
+
+
+        </section>
+
+
+        <!-- =================================================
+             COMPLAINTS
+             ================================================= -->
+
+        <section class="complaints-section">
+
+
+            <div class="complaints-header">
+
+                <h2>
+                    📋 Reported Complaints
+                </h2>
+
+                <strong>
+                    Showing
+                    <span id="resultsCount">
+                        0
+                    </span>
+                    complaints
+                </strong>
+
+            </div>
+
+
+            <div class="filters">
+
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="🔍 Search complaints..."
+                >
+
+
+                <select id="categoryFilter">
+
+                    <option value="All">
+                        All Categories
+                    </option>
+
+                    <option value="Garbage">
+                        Garbage
+                    </option>
+
+                    <option value="Pothole">
+                        Pothole
+                    </option>
+
+                    <option value="Drainage">
+                        Drainage
+                    </option>
+
+                    <option value="Streetlight">
+                        Streetlight
+                    </option>
+
+                    <option value="Water">
+                        Water
+                    </option>
+
+                    <option value="Other">
+                        Other
+                    </option>
+
+                </select>
+
+
+                <select id="severityFilter">
+
+                    <option value="All">
+                        All Severity
+                    </option>
+
+                    <option value="Low">
+                        Low
+                    </option>
+
+                    <option value="Medium">
+                        Medium
+                    </option>
+
+                    <option value="High">
+                        High
+                    </option>
+
+                </select>
+
+
+                <select id="priorityFilter">
+
+                    <option value="All">
+                        All Priority
+                    </option>
+
+                    <option value="Normal">
+                        Normal
+                    </option>
+
+                    <option value="Important">
+                        Important
+                    </option>
+
+                    <option value="Urgent">
+                        Urgent
+                    </option>
+
+                </select>
+
+
+                <select id="statusFilter">
+
+                    <option value="All">
+                        All Status
+                    </option>
+
+                    <option value="Pending">
+                        Pending
+                    </option>
+
+                    <option value="In Progress">
+                        In Progress
+                    </option>
+
+                    <option value="Resolved">
+                        Resolved
+                    </option>
+
+                </select>
+
+
+                <select id="sortFilter">
+
+                    <option value="newest">
+                        Newest First
+                    </option>
+
+                    <option value="oldest">
+                        Oldest First
+                    </option>
+
+                    <option value="severity-high">
+                        Highest Severity
+                    </option>
+
+                    <option value="severity-low">
+                        Lowest Severity
+                    </option>
+
+                    <option value="priority-high">
+                        Highest Priority
+                    </option>
+
+                    <option value="priority-low">
+                        Lowest Priority
+                    </option>
+
+                    <option value="title-az">
+                        Title A-Z
+                    </option>
+
+                    <option value="title-za">
+                        Title Z-A
+                    </option>
+
+                </select>
+
+
+                <button
+                    id="clearFilters"
+                    type="button"
+                >
+                    Clear Filters
+                </button>
+
+
+            </div>
+
+
+            <div
+                id="complaintsContainer"
+            ></div>
+
+
+            <div
+                id="noComplaints"
+                class="no-complaints"
+                style="display:none;"
+            >
+                No complaints found.
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+    <!-- =====================================================
+         DETAILS MODAL
+         ===================================================== -->
+
+    <div id="detailsModal">
+
+
+        <div class="modal-box">
+
+
+            <button
+                id="closeModal"
+                type="button"
+            >
+                ×
+            </button>
+
+
+            <div id="modalContent"></div>
+
+
+            <button
+                id="modalCloseButton"
+                type="button"
+            >
+                Close
+            </button>
+
+
+        </div>
+
+
+    </div>
+
+
+    <!-- =====================================================
+         LEAFLET JS
+         ===================================================== -->
+
+    <script
+        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+    </script>
+
+
+    <!-- =====================================================
+         LEAFLET MARKER CLUSTER JS
+         ===================================================== -->
+
+    <script
+        src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js">
+    </script>
+
+
+    <!-- =====================================================
+         CIVICAI SCRIPT
+         ===================================================== -->
+
+    <script src="script.js"></script>
+
+
+</body>
+
+</html>

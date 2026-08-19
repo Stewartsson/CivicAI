@@ -1,0 +1,1513 @@
+/* ============================================================
+   CIVICAI
+   style.css
+   Version 7.15.0
+   ============================================================ */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+body {
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background:
+        linear-gradient(
+            135deg,
+            #e8fff8,
+            #d5f7ee
+        );
+
+    color: #173b5c;
+
+    min-height: 100vh;
+}
+
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+
+.header {
+    background:
+        linear-gradient(
+            135deg,
+            #00695c,
+            #00897b
+        );
+
+    color: white;
+
+    padding: 25px 20px;
+
+    box-shadow:
+        0 5px 20px
+        rgba(0,0,0,.12);
+}
+
+
+.header-content {
+    max-width: 1200px;
+
+    margin: auto;
+}
+
+
+.logo-area {
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+}
+
+
+.logo-icon {
+    font-size: 45px;
+}
+
+
+.logo-area h1 {
+    font-size: 36px;
+
+    margin-bottom: 4px;
+}
+
+
+.logo-area p {
+    font-size: 16px;
+
+    opacity: .9;
+}
+
+
+/* ============================================================
+   MAIN CONTAINER
+   ============================================================ */
+
+.container {
+    width: 94%;
+
+    max-width: 1400px;
+
+    margin: 30px auto;
+}
+
+
+section {
+    margin-bottom: 35px;
+}
+
+
+/* ============================================================
+   SECTION TITLE
+   ============================================================ */
+
+.section-title {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-bottom: 20px;
+}
+
+
+.section-title span {
+    font-size: 30px;
+}
+
+
+.section-title h2 {
+    color: #00695c;
+
+    font-size: 28px;
+}
+
+
+/* ============================================================
+   REPORT
+   ============================================================ */
+
+.report-section {
+    background: white;
+
+    padding: 30px;
+
+    border-radius: 20px;
+
+    box-shadow:
+        0 8px 30px
+        rgba(0,0,0,.08);
+}
+
+
+.form-grid {
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 20px;
+}
+
+
+.form-group {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+
+.full-width {
+    grid-column: 1 / -1;
+}
+
+
+.form-group label {
+    font-weight: bold;
+}
+
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+
+    width: 100%;
+
+    padding: 14px;
+
+    border:
+        1px solid #b7ddd4;
+
+    border-radius: 10px;
+
+    font-size: 16px;
+
+    outline: none;
+}
+
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+
+    border-color:
+        #009688;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(0,150,136,.1);
+}
+
+
+.submit-btn {
+
+    margin-top: 20px;
+
+    padding: 14px 28px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #00897b,
+            #00695c
+        );
+
+    color: white;
+
+    border: none;
+
+    border-radius: 10px;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+
+.submit-btn:hover {
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 6px 15px
+        rgba(0,105,92,.2);
+}
+
+
+#submitMessage {
+    margin-top: 15px;
+}
+
+
+.success-message {
+
+    background: #e7f9f2;
+
+    color: #087f5b;
+
+    padding: 15px;
+
+    border-radius: 10px;
+
+}
+
+
+.error-message {
+
+    background: #ffebee;
+
+    color: #c62828;
+
+    padding: 15px;
+
+    border-radius: 10px;
+
+}
+
+
+/* ============================================================
+   DASHBOARD
+   ============================================================ */
+
+.stats-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap: 18px;
+}
+
+
+.stat-card {
+
+    background: white;
+
+    padding: 25px;
+
+    border-radius: 18px;
+
+    text-align: center;
+
+    border:
+        1px solid #b7e8db;
+
+    box-shadow:
+        0 5px 20px
+        rgba(0,0,0,.06);
+}
+
+
+.stat-number {
+
+    font-size: 40px;
+
+    font-weight: bold;
+
+    color: #00897b;
+
+    margin-bottom: 8px;
+}
+
+
+.stat-label {
+
+    font-size: 18px;
+
+    font-weight: bold;
+}
+
+
+/* ============================================================
+   ANALYTICS
+   ============================================================ */
+
+.analytics-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 25px;
+}
+
+
+.analytics-card {
+
+    background: white;
+
+    padding: 28px;
+
+    border-radius: 20px;
+
+    min-height: 300px;
+
+    box-shadow:
+        0 8px 25px
+        rgba(0,0,0,.07);
+}
+
+
+.analytics-card h3 {
+
+    color: #00695c;
+
+    font-size: 21px;
+
+    margin-bottom: 25px;
+}
+
+
+.analytics-row {
+
+    margin-bottom: 18px;
+}
+
+
+.analytics-label {
+
+    display: flex;
+
+    justify-content:
+        space-between;
+
+    margin-bottom: 7px;
+
+    font-weight: bold;
+}
+
+
+.progress-background {
+
+    height: 13px;
+
+    background: #e4f2ee;
+
+    border-radius: 20px;
+
+    overflow: hidden;
+}
+
+
+.progress-bar {
+
+    height: 100%;
+
+    border-radius: 20px;
+}
+
+
+.category-bar {
+    background: #00a88f;
+}
+
+
+.low-bar {
+    background: #4dcc8b;
+}
+
+
+.medium-bar {
+    background: #edbd3e;
+}
+
+
+.high-bar {
+    background: #e0525a;
+}
+
+
+.normal-bar {
+    background: #4f86d9;
+}
+
+
+.important-bar {
+    background: #edbd3e;
+}
+
+
+.urgent-bar {
+    background: #e0525a;
+}
+
+
+.pending-bar {
+    background: #edbd3e;
+}
+
+
+.progress-status-bar {
+    background: #5797d5;
+}
+
+
+.resolved-bar {
+    background: #4fa968;
+}
+
+
+/* ============================================================
+   MAP SECTION
+   ============================================================ */
+
+.map-section {
+
+    background: white;
+
+    padding: 28px;
+
+    border-radius: 20px;
+
+    box-shadow:
+        0 8px 25px
+        rgba(0,0,0,.07);
+}
+
+
+.map-description {
+
+    margin:
+        -8px 0 18px;
+
+    color: #526b78;
+
+    line-height: 1.6;
+}
+
+
+.map-toolbar {
+
+    display: flex;
+
+    justify-content:
+        space-between;
+
+    align-items: center;
+
+    gap: 12px;
+
+    margin-bottom: 12px;
+}
+
+
+.map-btn {
+
+    border:
+        1px solid #009688;
+
+    background: white;
+
+    color: #00695c;
+
+    border-radius: 10px;
+
+    padding: 10px 15px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+
+.map-btn:hover {
+
+    background: #00695c;
+
+    color: white;
+}
+
+
+/* ============================================================
+   IMPORTANT LEAFLET MAP FIX
+   ============================================================ */
+
+#complaintMap {
+
+    width: 100%;
+
+    height: 520px;
+
+    min-height: 520px;
+
+    position: relative;
+
+    border:
+        1px solid #b7ddd4;
+
+    border-radius: 16px;
+
+    overflow: hidden;
+
+    background:
+        #dbeff5;
+}
+
+
+/*
+   Do NOT apply normal website image
+   sizing to Leaflet tiles.
+*/
+
+#complaintMap img {
+
+    max-width: none !important;
+
+    max-height: none !important;
+}
+
+
+#complaintMap .leaflet-container {
+
+    width: 100%;
+
+    height: 100%;
+
+    background:
+        #dbeff5;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+}
+
+
+/*
+   Let Leaflet control its own tiles.
+*/
+
+#complaintMap .leaflet-tile {
+
+    width: 256px;
+
+    height: 256px;
+}
+
+
+#complaintMap .leaflet-tile-container {
+
+    white-space: nowrap;
+}
+
+
+/*
+   Leaflet layers.
+*/
+
+#complaintMap .leaflet-map-pane {
+    z-index: 1;
+}
+
+
+#complaintMap .leaflet-tile-pane {
+    z-index: 2;
+}
+
+
+#complaintMap .leaflet-overlay-pane {
+    z-index: 4;
+}
+
+
+#complaintMap .leaflet-shadow-pane {
+    z-index: 5;
+}
+
+
+#complaintMap .leaflet-marker-pane {
+    z-index: 6;
+}
+
+
+#complaintMap .leaflet-tooltip-pane {
+    z-index: 7;
+}
+
+
+#complaintMap .leaflet-popup-pane {
+    z-index: 8;
+}
+
+
+/* ============================================================
+   MAP CONTROLS
+   ============================================================ */
+
+#complaintMap .leaflet-control-zoom {
+
+    border: none;
+
+    box-shadow:
+        0 4px 15px
+        rgba(0,0,0,.18);
+}
+
+
+#complaintMap .leaflet-control-zoom a {
+
+    width: 38px;
+
+    height: 38px;
+
+    line-height: 38px;
+
+    font-size: 22px;
+
+    color: #00695c;
+
+    background: white;
+}
+
+
+#complaintMap .leaflet-control-zoom a:hover {
+
+    background: #e8fff8;
+
+    color: #004d40;
+}
+
+
+/* ============================================================
+   MAP LEGEND
+   ============================================================ */
+
+.map-legend {
+
+    display: flex;
+
+    gap: 18px;
+
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    margin-top: 12px;
+
+    color: #173b5c;
+}
+
+
+.legend-dot {
+
+    width: 13px;
+
+    height: 13px;
+
+    border-radius: 50%;
+
+    display: inline-block;
+
+    margin-right: 5px;
+}
+
+
+.legend-dot.low {
+    background: #4dcc8b;
+}
+
+
+.legend-dot.medium {
+    background: #edbd3e;
+}
+
+
+.legend-dot.high {
+    background: #e0525a;
+}
+
+
+/* ============================================================
+   MAP POPUPS
+   ============================================================ */
+
+.leaflet-popup-content-wrapper {
+
+    border-radius: 12px;
+}
+
+
+.leaflet-popup-content {
+
+    margin: 14px;
+}
+
+
+.map-popup {
+
+    min-width: 230px;
+}
+
+
+.map-popup h3 {
+
+    color: #00695c;
+
+    margin-bottom: 8px;
+}
+
+
+.map-popup p {
+
+    margin: 5px 0;
+
+    line-height: 1.4;
+}
+
+
+.map-popup .popup-btn {
+
+    margin-top: 8px;
+
+    padding: 8px 12px;
+
+    border: 0;
+
+    border-radius: 8px;
+
+    background: #00695c;
+
+    color: white;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    width: 100%;
+}
+
+
+.map-popup .popup-btn:hover {
+
+    background: #004d40;
+}
+
+
+.map-popup .popup-note {
+
+    font-size: 12px;
+
+    color: #777;
+
+    margin-top: 7px;
+
+    background: #f5fbf9;
+
+    padding: 7px;
+
+    border-radius: 7px;
+}
+
+
+/* ============================================================
+   FILTERS
+   ============================================================ */
+
+.filter-bar {
+
+    display: grid;
+
+    grid-template-columns:
+        2fr 1fr 1fr 1fr 1fr 1.2fr auto;
+
+    gap: 14px;
+
+    margin-bottom: 15px;
+}
+
+
+.filter-bar input,
+.filter-bar select {
+
+    background: white;
+
+    border:
+        1px solid #b7ddd4;
+
+    border-radius: 12px;
+
+    padding: 14px;
+
+    font-size: 15px;
+
+    color: #173b5c;
+
+    outline: none;
+}
+
+
+.filter-bar input:focus,
+.filter-bar select:focus {
+
+    border-color: #009688;
+}
+
+
+.clear-btn {
+
+    background: white;
+
+    border:
+        1px solid #009688;
+
+    color: #00695c;
+
+    border-radius: 12px;
+
+    padding: 12px 18px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+}
+
+
+.clear-btn:hover {
+
+    background: #00695c;
+
+    color: white;
+}
+
+
+.results-info {
+
+    margin: 15px 0;
+}
+
+
+/* ============================================================
+   COMPLAINT CARDS
+   ============================================================ */
+
+.complaints-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 25px;
+}
+
+
+.complaint-card {
+
+    background: white;
+
+    border-radius: 20px;
+
+    padding: 30px;
+
+    box-shadow:
+        0 8px 25px
+        rgba(0,0,0,.08);
+
+    border:
+        1px solid #c9e7df;
+
+    transition: .25s;
+}
+
+
+.complaint-card:hover {
+
+    transform:
+        translateY(-4px);
+
+    box-shadow:
+        0 12px 30px
+        rgba(0,0,0,.12);
+}
+
+
+.complaint-title {
+
+    font-size: 25px;
+
+    color: #00695c;
+
+    margin-bottom: 18px;
+}
+
+
+.description {
+
+    line-height: 1.7;
+
+    margin-bottom: 18px;
+}
+
+
+.info-row {
+
+    margin: 14px 0;
+
+    font-size: 17px;
+}
+
+
+.info-label {
+
+    font-weight: bold;
+}
+
+
+.badge {
+
+    display: inline-block;
+
+    padding: 7px 13px;
+
+    border-radius: 20px;
+
+    font-weight: bold;
+}
+
+
+/* ============================================================
+   SEVERITY
+   ============================================================ */
+
+.severity-low {
+
+    background: #e1f8ea;
+
+    color: #159447;
+}
+
+
+.severity-medium {
+
+    background: #fff1cc;
+
+    color: #a96d00;
+}
+
+
+.severity-high {
+
+    background: #ffe0e3;
+
+    color: #c92e3d;
+}
+
+
+/* ============================================================
+   PRIORITY
+   ============================================================ */
+
+.priority-normal {
+
+    background: #e4edff;
+
+    color: #3368b6;
+}
+
+
+.priority-important {
+
+    background: #fff0d5;
+
+    color: #a86600;
+}
+
+
+.priority-urgent {
+
+    background: #ffe0e0;
+
+    color: #c52e37;
+}
+
+
+/* ============================================================
+   STATUS
+   ============================================================ */
+
+.status-box {
+
+    background: #f1fffb;
+
+    border:
+        1px solid #b7e8db;
+
+    border-radius: 15px;
+
+    padding: 18px;
+
+    margin-top: 18px;
+}
+
+
+.status-box label {
+
+    display: block;
+
+    font-weight: bold;
+
+    margin-bottom: 10px;
+}
+
+
+.status-select {
+
+    width: 100%;
+
+    padding: 12px;
+
+    border:
+        1px solid #abdace;
+
+    border-radius: 10px;
+
+    background: white;
+
+    font-size: 16px;
+
+    font-weight: bold;
+}
+
+
+.card-buttons {
+
+    display: flex;
+
+    gap: 10px;
+
+    margin-top: 20px;
+}
+
+
+.view-btn {
+
+    width: 100%;
+
+    padding: 13px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #00695c,
+            #00897b
+        );
+
+    color: white;
+
+    font-weight: bold;
+
+    font-size: 16px;
+
+    cursor: pointer;
+}
+
+
+.view-btn:hover {
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 5px 15px
+        rgba(0,105,92,.25);
+}
+
+
+/* ============================================================
+   MODAL
+   ============================================================ */
+
+.modal {
+
+    display: none;
+
+    position: fixed;
+
+    z-index: 9999;
+
+    left: 0;
+
+    top: 0;
+
+    width: 100%;
+
+    height: 100%;
+
+    background:
+        rgba(0,0,0,.65);
+
+    justify-content: center;
+
+    align-items: center;
+
+    padding: 20px;
+}
+
+
+.modal-content {
+
+    background: white;
+
+    width: 100%;
+
+    max-width: 700px;
+
+    max-height: 88vh;
+
+    overflow-y: auto;
+
+    border-radius: 22px;
+
+    padding: 35px;
+
+    position: relative;
+
+    box-shadow:
+        0 20px 60px
+        rgba(0,0,0,.25);
+}
+
+
+.close-modal {
+
+    position: absolute;
+
+    top: 10px;
+
+    right: 16px;
+
+    width: 40px;
+
+    height: 40px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: #f1f5f4;
+
+    color: #555;
+
+    font-size: 30px;
+
+    cursor: pointer;
+}
+
+
+.close-modal:hover {
+
+    background: #ffe0e0;
+
+    color: #c62828;
+}
+
+
+.modal-title {
+
+    color: #00695c;
+
+    font-size: 27px;
+
+    margin-bottom: 8px;
+
+    padding-right: 40px;
+}
+
+
+.modal-id {
+
+    color: #777;
+
+    margin-bottom: 25px;
+
+    font-weight: bold;
+}
+
+
+.modal-description {
+
+    background: #f5fbf9;
+
+    border-left:
+        4px solid #00897b;
+
+    padding: 18px;
+
+    border-radius: 10px;
+
+    line-height: 1.7;
+
+    margin-bottom: 25px;
+}
+
+
+.modal-info-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 15px;
+}
+
+
+.modal-info {
+
+    background: #f8fbfa;
+
+    border:
+        1px solid #d9ece7;
+
+    border-radius: 12px;
+
+    padding: 16px;
+}
+
+
+.modal-info-label {
+
+    display: block;
+
+    font-size: 13px;
+
+    color: #777;
+
+    margin-bottom: 7px;
+
+    font-weight: bold;
+}
+
+
+.modal-info-value {
+
+    font-size: 17px;
+
+    font-weight: bold;
+
+    color: #173b5c;
+}
+
+
+.modal-close-button {
+
+    width: 100%;
+
+    margin-top: 25px;
+
+    padding: 13px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: #00695c;
+
+    color: white;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+
+.modal-close-button:hover {
+
+    background: #004d40;
+}
+
+
+/* ============================================================
+   NO RESULTS
+   ============================================================ */
+
+.no-complaints {
+
+    background: white;
+
+    padding: 50px;
+
+    border-radius: 20px;
+
+    text-align: center;
+
+    font-size: 20px;
+}
+
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+
+footer {
+
+    text-align: center;
+
+    padding: 25px;
+
+    margin-top: 30px;
+
+    color: #477;
+}
+
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 1100px) {
+
+    .filter-bar {
+
+        grid-template-columns:
+            1fr 1fr 1fr;
+
+    }
+
+}
+
+
+@media (max-width: 800px) {
+
+    .stats-grid {
+
+        grid-template-columns:
+            1fr 1fr;
+
+    }
+
+
+    .analytics-grid {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .complaints-grid {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .form-grid {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .full-width {
+
+        grid-column:
+            auto;
+
+    }
+
+
+    .modal-info-grid {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .map-toolbar {
+
+        align-items:
+            flex-start;
+
+        flex-direction:
+            column;
+
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .stats-grid {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .filter-bar {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .logo-area h1 {
+
+        font-size: 28px;
+
+    }
+
+
+    .complaint-title {
+
+        font-size: 21px;
+
+    }
+
+
+    .modal-content {
+
+        padding: 25px;
+
+    }
+
+
+    .modal-title {
+
+        font-size: 22px;
+
+    }
+
+
+    #complaintMap {
+
+        height: 420px;
+
+        min-height: 420px;
+
+    }
+
+}
